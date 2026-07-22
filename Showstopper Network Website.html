@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Showstopper Network</title>
+<meta name="description" content="Showstopper Network is a Mumbai-based creator-first studio bringing talent, brands and stories under one roof. Built to be remembered.">
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Milindmehta/assets/main/lockup_final.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0a0c;
+    --gold: #eecb3f;
+    --gold-deep: #c9a227;
+    --cream: #f3efe6;
+    --dim: #7d7d85;
+    --line: rgba(201,162,39,0.18);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  html::-webkit-scrollbar, body::-webkit-scrollbar{ display:none; width:0; }
+
+  body{
+    background: var(--bg);
+    color: var(--cream);
+    font-family:'Inter', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    scroll-snap-type: y mandatory;
+    overflow-x: hidden;
+  }
+  /* on touch devices, let the page scroll naturally instead of snapping */
+  @media (hover: none){
+    body{ scroll-snap-type: none; }
+  }
+
+  /* cursor spotlight, fixed across the whole page */
+  #spot{
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+    background: radial-gradient(circle 480px at var(--x,50%) var(--y,40%),
+      rgba(238,203,63,0.10), rgba(238,203,63,0.03) 45%, transparent 72%);
+    transition: background 0.15s ease-out;
+  }
+  #vignette{
+    position:fixed; inset:0; z-index:2; pointer-events:none;
+    box-shadow: inset 0 0 200px rgba(0,0,0,0.6);
+  }
+
+  section{
+    position:relative;
+    z-index:3;
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding: 96px 32px;
+    text-align:center;
+  }
+
+  .inner{ width:100%; max-width: 1000px; }
+
+  /* ---- shared type ---- */
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  h2{
+    font-family:'Inter', sans-serif;
+    font-weight: 300;
+    font-size: clamp(24px, 3.6vw, 40px);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    max-width: 20ch;
+    margin: 0 auto;
+  }
+  .lede{
+    font-size: clamp(14px, 1.5vw, 16px);
+    color: var(--dim);
+    line-height: 1.75;
+    max-width: 58ch;
+    margin: 28px auto 0;
+  }
+  .rule{
+    width: 56px; height:1px;
+    background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
+    margin: 0 auto 30px;
+  }
+
+  /* ---- hero ---- */
+  #hero .lockup{
+    height: clamp(120px, 19vh, 190px);
+    width:auto; max-width: 80vw;
+    margin: 0 auto;
+  }
+  #hero .tagline{
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(17px, 2.4vw, 24px);
+    color: var(--dim);
+    margin-top: 52px;
+  }
+  .scroll-cue{
+    position:absolute; bottom: 42px; left:50%; transform:translateX(-50%);
+    font-family:'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.3em; text-transform:uppercase;
+    color: rgba(125,125,133,0.6);
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+  }
+  .scroll-cue span{
+    display:block; width:1px; height:28px;
+    background: linear-gradient(180deg, var(--gold-deep), transparent);
+    animation: drop 2.4s ease-in-out infinite;
+  }
+  @keyframes drop{
+    0%,100%{ opacity:0.25; transform:scaleY(0.5); transform-origin:top; }
+    50%{ opacity:1; transform:scaleY(1); transform-origin:top; }
+  }
+
+  /* ---- what we do: three pillars ---- */
+  .pillars{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-top: 64px;
+  }
+  .pillar{
+    background: var(--bg);
+    padding: 40px 28px;
+    text-align:left;
+  }
+  .pillar h3{
+    font-family:'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .pillar p{
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.7;
+  }
+
+  /* ---- andar kya hai ---- */
+  .akh-title{
+    font-family:'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(34px, 6vw, 62px);
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    line-height: 1;
+  }
+  .akh-title em{ color: var(--gold); font-style: normal; }
+  .video{
+    position:relative;
+    width:100%;
+    aspect-ratio: 16/9;
+    margin: 44px auto 0;
+    border:1px solid var(--line);
+    background: #000;
+    overflow:hidden;
+  }
+  .video iframe{ width:100%; height:100%; border:0; display:block; }
+  .press{
+    margin-top: 26px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .press b{ color: var(--gold-deep); font-weight:500; }
+
+  /* ---- work grid ---- */
+  .work{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    margin-top: 56px;
+    text-align:left;
+  }
+  .piece{ display:block; text-decoration:none; color:inherit; }
+  .piece .play{
+    position:absolute; inset:0; z-index:2;
+    display:flex; align-items:center; justify-content:center;
+    pointer-events:none;
+  }
+  .piece .play::before{
+    content:'';
+    width: 46px; height: 46px;
+    border: 1px solid rgba(243,239,230,0.7);
+    border-radius: 50%;
+    background: rgba(10,10,12,0.35);
+    backdrop-filter: blur(2px);
+    transition: border-color 0.4s ease, background 0.4s ease;
+  }
+  .piece .play::after{
+    content:'';
+    position:absolute;
+    border-left: 9px solid rgba(243,239,230,0.85);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    margin-left: 3px;
+    transition: border-left-color 0.4s ease;
+  }
+  .piece:hover .play::before{ border-color: var(--gold); background: rgba(10,10,12,0.15); }
+  .piece:hover .play::after{ border-left-color: var(--gold); }
+  .piece .frame{
+    position:relative;
+    aspect-ratio: 16/10;
+    background: #101014;
+    border:1px solid var(--line);
+    overflow:hidden;
+    margin-bottom: 18px;
+  }
+  .piece .frame img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter: grayscale(0.35) contrast(1.05);
+    transition: filter 0.5s ease, transform 0.7s ease;
+  }
+  .piece:hover .frame img{ filter:none; transform: scale(1.03); }
+  .piece .placeholder{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.22em; text-transform:uppercase;
+    color: rgba(125,125,133,0.45);
+  }
+  .piece h3{
+    font-family:'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .piece p{
+    font-size: 13px;
+    color: var(--dim);
+    line-height: 1.65;
+  }
+
+  /* ---- trusted by ---- */
+  .clients{
+    margin-top: 56px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap: 14px 0;
+  }
+  .clients span{
+    font-family:'JetBrains Mono', monospace;
+    font-size: clamp(11px, 1.15vw, 13px);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+    padding: 0 22px;
+    border-right: 1px solid var(--line);
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+  .clients span:last-child{ border-right:0; }
+  .clients span:hover{ color: var(--gold); }
+
+  /* ---- contact ---- */
+  #trusted{ padding-bottom: 64px; }
+  #contact{ padding-top: 64px; }
+  #contact h2{ max-width: 24ch; }
+  .founder{
+    margin-top: 40px;
+    font-size: 13px;
+    color: var(--dim);
+    line-height: 1.8;
+    max-width: 52ch;
+    margin-left:auto; margin-right:auto;
+  }
+  .founder b{ color: var(--cream); font-weight:400; }
+  .cta{
+    display:inline-block;
+    margin-top: 44px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration:none;
+    padding: 15px 32px;
+    border: 1px solid var(--gold-deep);
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .cta:hover{ background: var(--gold); color: #0a0a0c; }
+  .contact-row{
+    margin-top: 44px;
+    display:flex; gap: 26px; justify-content:center; flex-wrap:wrap;
+    font-family:'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.04em;
+  }
+  .contact-row a{
+    color: var(--dim); text-decoration:none;
+    border-bottom:1px solid transparent;
+    transition: color 0.25s, border-color 0.25s;
+  }
+  .contact-row a:hover{ color: var(--gold); border-color: var(--gold-deep); }
+  .signoff{
+    position:absolute; bottom: 34px; left:0; right:0;
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size: 12px;
+    color: rgba(125,125,133,0.5);
+  }
+
+
+  /* press row */
+  .press-row{
+    margin-top: 26px;
+    display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap;
+  }
+  .press{ margin-top:0; }
+  .press-sep{ width:1px; height:11px; background: var(--line); }
+  .press-link{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing:0.2em; text-transform:uppercase;
+    color: var(--dim); background:none; border:0; cursor:pointer;
+    border-bottom:1px solid var(--line); padding:0 0 3px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  .press-link b{ color: var(--gold-deep); font-weight:500; }
+  .press-link:hover{ color: var(--cream); border-color: var(--gold); }
+
+  /* founder block */
+  .founder-block{
+    display:grid;
+    grid-template-columns: 300px 1fr;
+    gap: 56px;
+    align-items:center;
+    text-align:left;
+  }
+  .portrait{
+    position:relative;
+    aspect-ratio: 4/5;
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .portrait img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter: grayscale(0.2) contrast(1.05);
+  }
+  .portrait::after{
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(180deg, transparent 55%, rgba(10,10,12,0.55));
+    pointer-events:none;
+  }
+  .founder-text h2{ margin:0; max-width: 18ch; }
+  .founder-text .founder{ margin-left:0; margin-right:0; max-width: 46ch; }
+  .founder-text .contact-row{ justify-content:flex-start; }
+  .rule-left{
+    width: 44px; height:1px;
+    background: linear-gradient(90deg, var(--gold-deep), transparent);
+    margin-bottom: 26px;
+  }
+
+  /* lightbox */
+  #lightbox{
+    position:fixed; inset:0; z-index:9999;
+    background: rgba(6,6,8,0.94);
+    display:none; align-items:center; justify-content:center;
+    padding: 5vh 6vw; cursor: zoom-out;
+    backdrop-filter: blur(6px);
+  }
+  #lightbox.open{ display:flex; }
+  #lightbox img{
+    max-width:100%; max-height:90vh; object-fit:contain;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+  }
+
+  .press-clip{
+    display:block; margin: 40px auto 8px; max-width: 340px;
+    border:1px solid var(--line); position:relative; overflow:hidden;
+    transition: border-color 0.4s ease;
+  }
+  .press-clip img{ width:100%; height:auto; display:block; }
+  .press-clip .press-tag{
+    position:absolute; left:0; right:0; bottom:0;
+    font-family:'JetBrains Mono', monospace; font-size:10px;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--cream);
+    background: linear-gradient(180deg, transparent, rgba(10,10,12,0.9));
+    padding: 30px 14px 12px; text-align:left;
+  }
+  .press-clip .press-tag b{ color: var(--gold); font-weight:500; }
+  .press-clip:hover{ border-color: var(--gold-deep); }
+
+  /* ---- scroll reveal ---- */
+  .reveal{ opacity:0; transform: translateY(18px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* ---- responsive ---- */
+  @media (max-width: 820px){
+    section{
+      padding: 64px 20px;
+      /* let tall sections grow instead of clipping into one locked screen */
+      min-height: auto;
+      scroll-snap-align: none;
+    }
+    /* keep the one-screen feel only where content is light */
+    #hero{ min-height: 100vh; min-height: 100dvh; scroll-snap-align: start; }
+
+    h2{ font-size: clamp(22px, 6vw, 30px); max-width: 24ch; }
+    .lede{ font-size: 14px; }
+    .eyebrow{ margin-bottom: 22px; }
+
+    .pillars{ grid-template-columns: 1fr; margin-top: 40px; }
+    .pillar{ padding: 26px 20px; text-align:center; }
+
+    .akh-title{ font-size: clamp(32px, 11vw, 48px); }
+    .video{ margin-top: 32px; }
+    .press-clip{ max-width: 88%; margin: 28px auto 4px; }
+
+    .work{ grid-template-columns: 1fr; gap: 26px; margin-top: 36px; }
+
+    .clients{ margin-top: 40px; gap: 10px 0; }
+    .clients span{ padding: 0 12px; font-size: 12px; }
+
+    #trusted{ padding-bottom: 56px; }
+    #contact{ padding-top: 56px; }
+    .founder-block{ grid-template-columns: 1fr; gap: 28px; text-align:center; }
+    .portrait{ max-width: 200px; margin: 0 auto; }
+    .founder-text h2{ max-width:none; }
+    .founder-text .founder{ max-width:none; }
+    .founder-text .contact-row{ justify-content:center; }
+    .rule-left{ margin-left:auto; margin-right:auto; }
+    .signoff{ font-size: 11px; padding: 0 20px; }
+    .scroll-cue{ bottom: 28px; }
+  }
+
+  @media (max-width: 460px){
+    section{ padding: 52px 18px; }
+    #hero .tagline{ font-size: 16px; margin-top: 40px; }
+    .contact-row{ flex-direction:column; gap: 14px; align-items:center; }
+    .cta{ width:100%; max-width: 280px; text-align:center; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .scroll-cue span{ animation:none; }
+    #spot{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="spot"></div>
+<div id="vignette"></div>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <div class="inner">
+    <img class="lockup" src="https://raw.githubusercontent.com/Milindmehta/assets/main/lockup_final.png" alt="Showstopper Network">
+    <p class="tagline">The world pauses when a Showstopper takes over.</p>
+  </div>
+  <div class="scroll-cue">Scroll<span></span></div>
+</section>
+
+<!-- ============ WHAT WE DO ============ -->
+<section id="what">
+  <div class="inner reveal">
+    <div class="eyebrow">What we do</div>
+    <h2>A creator-first studio unifying talent, content and brands.</h2>
+    <p class="lede">Influencer-led narratives built to spark attention and stay in memory. Strategy, curation, production and distribution, owned end to end.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <h3>Original IP</h3>
+        <p>Our own IP, built to prove what creator-first storytelling can be.</p>
+      </div>
+      <div class="pillar">
+        <h3>Network Access</h3>
+        <p>Creators, artists and talent, brought in with intent.</p>
+      </div>
+      <div class="pillar">
+        <h3>Production Craft</h3>
+        <p>Cinematic quality that makes a campaign feel timeless and premium, never templated.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ANDAR KYA HAI ============ -->
+<section id="akh">
+  <div class="inner reveal">
+    <div class="eyebrow">Our flagship IP</div>
+    <h1 class="akh-title">Andar <em>क्या है?</em></h1>
+    <p class="lede">Unscripted, cinematic conversations with artists and communities. Stripped of pretence, rooted in soul. The raw storytelling social media forgot to be.</p>
+
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/_ypG33Fv8BY" title="Andar Kya Hai? Episode 02" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <p class="press">Episode 02 &middot; 59 Assembly, Marol</p>
+    <a class="press-clip" href="https://www.mid-day.com/mumbai/mumbai-news/article/mumbai-diary-sunday-dossier-23585525" target="_blank" rel="noopener" aria-label="Read the Mid-Day feature">
+      <img src="https://raw.githubusercontent.com/Milindmehta/assets/main/Midday.svg" alt="Showstopper Network featured in Mid-Day, Sunday Dossier" loading="lazy">
+      <span class="press-tag">Featured in <b>Mid-Day</b> &nearr;</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============ WORK ============ -->
+<section id="work">
+  <div class="inner reveal">
+    <div class="eyebrow">Selected work</div>
+    <h2>Proof, not promises.</h2>
+
+    <div class="work">
+      <a class="piece" href="https://youtu.be/kH-ih06rmpI" target="_blank" rel="noopener">
+        <div class="frame">
+          <img src="https://img.youtube.com/vi/kH-ih06rmpI/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/kH-ih06rmpI/hqdefault.jpg'"
+               alt="Van Heusen Air Series" loading="lazy">
+          <span class="play"></span>
+        </div>
+        <h3>Van Heusen &middot; Air Series</h3>
+        <p>A creator-led reels campaign, extended into long-form on Raj Shamani's podcast.</p>
+      </a>
+
+      <a class="piece" href="https://youtu.be/sNbKkXUFo_Y" target="_blank" rel="noopener">
+        <div class="frame">
+          <img src="https://img.youtube.com/vi/sNbKkXUFo_Y/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/sNbKkXUFo_Y/hqdefault.jpg'"
+               alt="Myntra Creator Fest" loading="lazy">
+          <span class="play"></span>
+        </div>
+        <h3>Myntra Creator Fest</h3>
+        <p>A 200-plus gathering of India's creators and celebrities, brought together by Showstopper.</p>
+      </a>
+
+      <a class="piece" href="https://youtu.be/tncmLlke-Nc" target="_blank" rel="noopener">
+        <div class="frame">
+          <img src="https://img.youtube.com/vi/tncmLlke-Nc/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/tncmLlke-Nc/hqdefault.jpg'"
+               alt="Myntra x Imtiaz Ali" loading="lazy">
+          <span class="play"></span>
+        </div>
+        <h3>Myntra &times; Imtiaz Ali</h3>
+        <p>Myntra needed a storyteller. We brought Imtiaz Ali, and ran it end to end.</p>
+      </a>
+
+      <a class="piece" href="https://youtu.be/CD02nRc-BF4" target="_blank" rel="noopener">
+        <div class="frame">
+          <img src="https://img.youtube.com/vi/CD02nRc-BF4/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/CD02nRc-BF4/hqdefault.jpg'"
+               alt="पापलेट.exe" loading="lazy">
+          <span class="play"></span>
+        </div>
+        <h3>पापलेट.exe</h3>
+        <p>A story of this scale, told by bending new tools to old instincts.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUSTED BY ============ -->
+<section id="trusted">
+  <div class="inner reveal">
+    <div class="eyebrow">Trusted by</div>
+    <h2>Where iconic brands meet cultural storytelling.</h2>
+
+    <div class="clients">
+      <span>Amazon Prime Video</span>
+      <span>Myntra</span>
+      <span>Coke Studio Bharat</span>
+      <span>Van Heusen</span>
+      <span>T-Series</span>
+      <span>Discovery</span>
+      <span>National Geographic</span>
+      <span>Meesho</span>
+      <span>Zoom</span>
+      <span>Roposo</span>
+      <span>Bajaj Allianz</span>
+      <span>BookMyShow</span>
+      <span>Maharashtra Tourism</span>
+      <span>Jharkhand Tourism</span>
+      <span>Microsoft Clipchamp</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="inner reveal">
+    <div class="founder-block">
+      <div class="portrait">
+        <img src="https://raw.githubusercontent.com/Milindmehta/assets/main/Milind%20Mehta%20Portrait.jpg" alt="Milind Mehta, Founder">
+      </div>
+      <div class="founder-text">
+        <div class="rule-left"></div>
+        <h2>Let's build the next cultural moment.</h2>
+        <p class="founder">
+          <b>Milind Mehta</b>, Founder. A decade across media, casting and content, and a
+          performer in his own right. Which is why creator-first here means built by one,
+          not borrowed from one.
+        </p>
+        <a class="cta" href="mailto:contact@showstopper.network?subject=Book%20a%2020-minute%20call">Book a 20-minute call</a>
+        <div class="contact-row">
+          <a href="mailto:contact@showstopper.network">contact@showstopper.network</a>
+          <a href="https://instagram.com/showstopper.network" target="_blank" rel="noopener">@showstopper.network</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="signoff">Talent, brands and stories under one roof. Built to be remembered.</p>
+</section>
+
+
+
+
+<script>
+  // spotlight follows cursor
+  var spot = document.getElementById('spot');
+  window.addEventListener('mousemove', function(e){
+    spot.style.setProperty('--x', e.clientX + 'px');
+    spot.style.setProperty('--y', e.clientY + 'px');
+  }, { passive: true });
+
+  // ambient drift on touch devices
+  if (window.matchMedia('(hover: none)').matches){
+    var t = 0;
+    (function drift(){
+      t += 0.003;
+      spot.style.setProperty('--x', (50 + Math.sin(t) * 20) + '%');
+      spot.style.setProperty('--y', (42 + Math.cos(t * 0.75) * 12) + '%');
+      requestAnimationFrame(drift);
+    })();
+  }
+
+  // reveal on scroll
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting) en.target.classList.add('in');
+    });
+  }, { threshold: 0.25 });
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>
