@@ -606,8 +606,8 @@ body.near-end .hud{opacity:0}
   .work-head{flex-direction:column;align-items:flex-start;gap:20px}
   .scene{top:calc(76px + var(--i) * 12px);height:min(74vh,640px)}
   .scene-shade{background:linear-gradient(0deg,rgba(5,5,6,.95) 0%,rgba(5,5,6,.6) 55%,rgba(5,5,6,.2) 100%)}
-  .scene-play{top:auto;bottom:auto;right:auto;left:clamp(24px,4vw,60px);top:80px}
-  .scene-play .playdisc{width:64px;height:64px}
+  .scene-play{top:50%;left:50%;right:auto;bottom:auto;transform:translate(-50%,-50%)}
+  .scene-play .playdisc{width:76px;height:76px;background:rgba(5,5,6,.55);box-shadow:0 0 0 1px rgba(255,255,255,.06),0 20px 40px rgba(0,0,0,.5)}
   .scene-play .mono{display:none}
   .scene-top{justify-content:flex-end}
   .scene-top span:first-child{display:none}
@@ -1613,7 +1613,7 @@ body.near-end .hud{opacity:0}
     cur = (i + reels.length) % reels.length;
     var r = reels[cur];
     Sound.reel();
-    thStage.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + r.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="' + r.title.replace(/"/g, '') + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    thStage.innerHTML = '<iframe src="https://www.youtube.com/embed/' + r.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="' + r.title.replace(/"/g, '') + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     thTitle.innerHTML = '<small>' + r.sub + '</small>' + r.title;
   }
   function openTheatre(id){
